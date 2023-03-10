@@ -1,5 +1,5 @@
 import { Text, Link, useColorMode, Flex } from "@chakra-ui/react"
-import { QuestionIcon } from "@chakra-ui/icons"
+import { QuestionOutlineIcon } from "@chakra-ui/icons"
 import { Link as RRLink } from "react-router-dom"
 import { Children, cloneElement, createContext, PropsWithChildren, ReactElement, useContext } from "react"
 
@@ -13,8 +13,8 @@ export interface NavItemProps {
 const NavItemSelectorContext = createContext({ selectedPath: '' })
 
 const NavItem: React.FC<NavItemProps> = (props) => {
-
     const { selectedPath } = useContext(NavItemSelectorContext);
+    let { colorMode } = useColorMode();
 
     let active = props.active || selectedPath === props.path;
 
@@ -22,6 +22,7 @@ const NavItem: React.FC<NavItemProps> = (props) => {
     let hoverBg = active ? activeBg : '#2fa9f940'
     
     let textColor = active ? 'white' : undefined
+    let iconColor = colorMode === 'light' ? 'blackAlpha.700' : 'whiteAlpha.700';
 
     return (
         <Link
@@ -40,7 +41,7 @@ const NavItem: React.FC<NavItemProps> = (props) => {
             cursor={active ? 'default' : undefined}
         >
             <Flex alignItems="center" gap="1rem">
-                {props.icon}
+                {cloneElement(props.icon, { color: textColor || iconColor })}
                 <Text as='span'>{props.title}</Text>
             </Flex>
         </Link>
@@ -49,7 +50,7 @@ const NavItem: React.FC<NavItemProps> = (props) => {
 
 NavItem.defaultProps = {
     active: false,
-    icon: <QuestionIcon />
+    icon: <QuestionOutlineIcon />
 }
 
 export interface NavItemSelectorProps {

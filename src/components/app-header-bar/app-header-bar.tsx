@@ -1,33 +1,36 @@
-import { MoonIcon, SunIcon, HamburgerIcon } from '@chakra-ui/icons';
-import { Box, IconButton, Flex, Spacer, Text, useColorMode } from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
+import { Box, IconButton, Flex, Spacer, useColorMode } from '@chakra-ui/react';
+import DarkThemeBtn from 'components/buttons/dark-theme-btn/dark-theme-btn';
 
 const AppHeaderBar: React.FC<{}> = () => {
 
-    const { colorMode, toggleColorMode } = useColorMode();
+    const { colorMode } = useColorMode();
 
-    return <Box h='3rem' lineHeight='3rem'>
-        <Flex alignItems='center'>
-            <Text w='15rem' textAlign='center' fontSize='xl'>Austin's Portfolio</Text>
-            <IconButton
-                aria-label='Toggle side menu'
-                icon={<HamburgerIcon />}
-                variant='ghost'
-            />
-            <Spacer />
-            <Flex padding='0 2rem'>
+    let boxShadow = colorMode === 'light' ?
+        'appHeaderBar.light' : 'appHeaderBar.dark';
+
+    return (
+        <Box
+            h='3rem'
+            lineHeight='3rem'
+            p="0 16px"
+            boxShadow={boxShadow}
+            zIndex={1}
+        >
+            <Flex alignItems='center' h='100%'>
                 <IconButton
-                    aria-label='Toggle dark theme'
-                    onClick={toggleColorMode}
+                    aria-label='Toggle side menu'
+                    icon={<HamburgerIcon />}
                     variant='ghost'
-
-                    icon={colorMode === 'light' ? (
-                        <MoonIcon />
-                    ) : <SunIcon />}
                 />
+                <Spacer />
+                <Flex>
+                    <DarkThemeBtn />
+                </Flex>
             </Flex>
-        </Flex>
-        
-    </Box>
+            
+        </Box>
+    )
 }
 
 export default AppHeaderBar
