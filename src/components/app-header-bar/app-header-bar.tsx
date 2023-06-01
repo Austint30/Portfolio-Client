@@ -1,22 +1,15 @@
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { Box, IconButton, Flex, Spacer, useColorMode } from '@chakra-ui/react';
 import DarkThemeBtn from 'components/buttons/dark-theme-btn/dark-theme-btn';
+import HeaderBar, { HeaderBarProps } from 'components/header-bar/header-bar';
 
-const AppHeaderBar: React.FC<{}> = () => {
+export interface AppHeaderBarProps extends HeaderBarProps {
 
-    const { colorMode } = useColorMode();
+}
 
-    let boxShadow = colorMode === 'light' ?
-        'appHeaderBar.light' : 'appHeaderBar.dark';
-
+const AppHeaderBar: React.FC<AppHeaderBarProps> = (props) => {
     return (
-        <Box
-            h='3rem'
-            lineHeight='3rem'
-            p="0 16px"
-            boxShadow={boxShadow}
-            zIndex={1}
-        >
+        <HeaderBar {...props}>
             <Flex alignItems='center' h='100%'>
                 <IconButton
                     aria-label='Toggle side menu'
@@ -28,8 +21,7 @@ const AppHeaderBar: React.FC<{}> = () => {
                     <DarkThemeBtn />
                 </Flex>
             </Flex>
-            
-        </Box>
+        </HeaderBar>
     )
 }
 

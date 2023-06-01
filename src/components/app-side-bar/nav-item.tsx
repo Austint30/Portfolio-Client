@@ -1,4 +1,4 @@
-import { Text, Link, useColorMode, Flex } from "@chakra-ui/react"
+import { Text, Link, useColorMode, Flex, useStyleConfig } from "@chakra-ui/react"
 import { QuestionOutlineIcon } from "@chakra-ui/icons"
 import { Link as RRLink } from "react-router-dom"
 import { Children, cloneElement, createContext, PropsWithChildren, ReactElement, useContext } from "react"
@@ -13,12 +13,16 @@ export interface NavItemProps {
 const NavItemSelectorContext = createContext({ selectedPath: '' })
 
 const NavItem: React.FC<NavItemProps> = (props) => {
+
+
+    const styles = useStyleConfig('NavItem');
+
     const { selectedPath } = useContext(NavItemSelectorContext);
     let { colorMode } = useColorMode();
 
     let active = props.active || selectedPath === props.path;
 
-    let activeBg = '#2fa9f9bd';
+    let activeBg = '#029bffbd';
     let hoverBg = active ? activeBg : '#2fa9f940'
     
     let textColor = active ? 'white' : undefined
@@ -26,6 +30,7 @@ const NavItem: React.FC<NavItemProps> = (props) => {
 
     return (
         <Link
+            __css={styles}
             as={RRLink}
             to={props.path}
             lineHeight='1.5rem'
@@ -34,6 +39,7 @@ const NavItem: React.FC<NavItemProps> = (props) => {
             borderColor='transparent'
             borderRadius={8}
             bg={active ? activeBg : 'transparent'}
+            variant='colorless'
             color={active ? 'white' : undefined}
             _hover={{ textDecoration: 'none', bg: hoverBg, borderColor: activeBg }}
             _active={{ bg: activeBg, color: textColor }}
