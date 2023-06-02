@@ -22,7 +22,7 @@ const IndexPage: React.FC<{}> = (props) => {
                         <Text>
                             I'm mostly a frontend developer with backend development experience using Amazon Web Services.
                             I specialize in building complex web applications for any business need using modern web technologies.
-                            Currently I am building Manifest Central (flight following software) for <Link href="https://www.dataflyt.com" isExternal>DataFlyt. <ExternalLinkIcon mx='2px' /></Link>
+                            Currently I am developing Manifest Central (flight following software) for <Link href="https://www.dataflyt.com" isExternal>DataFlyt. <ExternalLinkIcon mx='2px' /></Link>
                         </Text>
                     </SlideFade>
                     <SlideFade in offsetY='30px' transition={{ enter: { duration: 1, ease: 'easeOut', delay: 0.4 } }}>
