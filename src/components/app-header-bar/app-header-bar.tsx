@@ -4,7 +4,7 @@ import DarkThemeBtn from 'components/buttons/dark-theme-btn/dark-theme-btn';
 import HeaderBar, { HeaderBarProps } from 'components/header-bar/header-bar';
 
 export interface AppHeaderBarProps extends HeaderBarProps {
-
+    onMenuClicked?: () => void
 }
 
 const AppHeaderBar: React.FC<AppHeaderBarProps> = (props) => {
@@ -15,6 +15,7 @@ const AppHeaderBar: React.FC<AppHeaderBarProps> = (props) => {
                     aria-label='Toggle side menu'
                     icon={<HamburgerIcon />}
                     variant='ghost'
+                    onClick={props.onMenuClicked}
                 />
                 <Spacer />
                 <Flex>

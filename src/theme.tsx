@@ -16,15 +16,15 @@ export const theme = extendTheme({
         HeaderBar: {
             baseStyle: (props: StyleFunctionProps) =>({
                 bg: mode('content.lightAcrylic', 'content.darkAcrylic')(props),
-                transition: 'box-shadow 300ms linear',
-                backdropFilter: 'blur(25px)'
+                transition: 'box-shadow 300ms linear'
             }),
             variants: {
                 hovering: (props: StyleFunctionProps) => ({
                     boxShadow: mode(
                         '0 2px 4px var(--chakra-colors-blackAlpha-200)',
                         '0 2px var(--chakra-colors-whiteAlpha-100)'
-                    )(props)
+                    )(props),
+                    backdropFilter: 'blur(25px)'
                 })
             }
         },

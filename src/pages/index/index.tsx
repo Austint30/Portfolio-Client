@@ -13,8 +13,10 @@ const IndexPage: React.FC<{}> = (props) => {
                 <Stack spacing={12}>
                     <SlideFade in offsetY='30px' transition={{ enter: { duration: 1, ease: 'easeOut' } }}>
                         <Box mb='-7'>
-                            <Heading fontSize='4rem'>Hi, I'm <Text as='span' variant='primary'>Austin Thibodeaux.</Text></Heading>
-                            <Heading fontSize='3rem'>I make cool web applications.</Heading>
+                            <Heading fontSize={['2rem', '3rem', '4rem' ]}>
+                                Hi, I'm <Box as='br' display={{ base: 'initial', lg: 'none' }} /> <Text as='span' variant='primary'>Austin Thibodeaux.</Text>
+                            </Heading>
+                            <Heading fontSize={[ '1.5rem', '2rem', '3rem']}>I make cool web applications.</Heading>
                             <Divider borderWidth='2px' width='10rem' mt='5' />
                         </Box>
                     </SlideFade>
