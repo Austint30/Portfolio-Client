@@ -1,8 +1,10 @@
-import './app.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client/core';
+import { ChakraProvider } from '@chakra-ui/react';
 import * as Pages from 'pages';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { theme } from 'theme';
+import './app.css';
 
 const router = createBrowserRouter([
     {
@@ -15,15 +17,25 @@ const router = createBrowserRouter([
     }
 ])
 
-const App: React.FC<{}> = () => {
-  const routerProvider = <RouterProvider router={router} />
+const apolloClient = new ApolloClient({
+    cache: new InMemoryCache()
+});
 
-  const configProvider = <ChakraProvider
+const App: React.FC<{}> = () => {
+
+    const routerProvider = <RouterProvider router={router} />
+
+    const configProvider = <ChakraProvider
         theme={theme}
         children={routerProvider}
-  />
+    />
 
-  return configProvider
+    const apolloProvider = <ApolloProvider
+        client={apolloClient}
+        children={configProvider}
+    />
+
+    return apolloProvider
 }
 
 export default App
