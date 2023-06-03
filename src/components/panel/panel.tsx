@@ -5,13 +5,17 @@ import React, { useMemo } from 'react';
 export interface PanelProps extends BoxProps {
     headerBar?: React.ReactElement<HeaderBarProps>,
 
+    // If enabled the bottom shadow of the headerbar disappears when scrolled to the top
+    // Looks good for highly presentational pages
+    useDynamicHeaderBar?: boolean,
+
     // Element to place in the background of the panel with absolute positioning.
     // Good for animated backgrounds.
     backgroundElement?: React.ReactElement<any> | null | false
 }
 
 const Panel = React.forwardRef<HTMLDivElement, PanelProps>((props, ref) => {
-    const { children, headerBar, backgroundElement, ...rest } = props;
+    const { children, headerBar, backgroundElement, useDynamicHeaderBar, ...rest } = props;
 
     const styles = useStyleConfig('Panel');
     const [ hoverHeader, setHoverHeader ] = React.useState(false);
@@ -25,7 +29,8 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>((props, ref) => {
 
     if (mutatableHeaderBar){
         mutatableHeaderBar = React.cloneElement(mutatableHeaderBar, {
-            variant: hoverHeader ? 'hovering' : undefined,
+            variant: hoverHeader || !useDynamicHeaderBar ? 'hovering' : undefined,
+            className: hoverHeader || !useDynamicHeaderBar ? 'hovering' : undefined,
             zIndex: 1
         })
     }

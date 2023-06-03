@@ -11,7 +11,10 @@ const IndexPage: React.FC<{}> = (props) => {
     const { colorMode } = useColorMode();
 
     return (
-        <PageWrapper backgroundElement={colorMode === 'dark' && <AmbientBackground />}>
+        <PageWrapper
+            backgroundElement={colorMode === 'dark' && <AmbientBackground />}
+            panelProps={{ useDynamicHeaderBar: true }}
+        >
             <Container maxW='container.xl' marginTop='3rem'>
                 <Stack spacing={12}>
                     <SlideFade in offsetY='30px' transition={{ enter: { duration: 1, ease: 'easeOut' } }}>

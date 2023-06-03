@@ -20,6 +20,7 @@ const PageWrapper: React.FC<PropsWithChildren<PageWrapperProps>> = (props) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const headerBarRef = useRef<HTMLDivElement>(null);
 
+    // Update the header bar color to match the backgroundElement canvas if available
     useEffect(() => {
         if (!headerBarRef.current) return;
         
