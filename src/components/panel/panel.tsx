@@ -51,7 +51,14 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>((props, ref) => {
 	// TODO: Fix background element (AmbientBackground) canvas covering scrollbar
 	if (props.backgroundElement) {
 		_backgroundElement = (
-			<Box position="absolute" left={0} top={0} width="100%" height="100%">
+			<Box
+				position="absolute"
+				left={0}
+				top={0}
+				width="100%"
+				height="100%"
+				pointerEvents="none"
+			>
 				{backgroundElement}
 			</Box>
 		);

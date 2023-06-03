@@ -12,6 +12,7 @@ import {
 	Divider,
 	useColorMode,
 } from "@chakra-ui/react";
+import { CanvasBackgrounds } from "canvas";
 import AmbientBackground from "components/ambient-background/ambient-background";
 import PageWrapper from "components/page-wrapper/page-wrapper";
 import usePageTitle from "hooks/page-title";
@@ -24,7 +25,15 @@ const IndexPage: React.FC<{}> = (props) => {
 
 	return (
 		<PageWrapper
-			backgroundElement={colorMode === "dark" && <AmbientBackground />}
+			backgroundElement={
+				colorMode === "dark" && (
+					<AmbientBackground
+						canvasFunction={
+							CanvasBackgrounds.BlurryMovingCirclesBackground
+						}
+					/>
+				)
+			}
 			panelProps={{ useDynamicHeaderBar: true }}
 		>
 			<Container maxW="container.xl" marginTop="3rem">

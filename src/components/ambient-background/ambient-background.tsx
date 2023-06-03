@@ -1,50 +1,34 @@
+import { CanvasBackgrounds } from "canvas";
 import React, { HTMLAttributes, useEffect, useRef } from "react";
 
 export interface AmbientBackgroundProps
 	extends HTMLAttributes<HTMLCanvasElement> {
 	canvasRef?: React.RefObject<HTMLCanvasElement>;
+	canvasFunction?: CanvasBackgrounds.CanvasBackgroundFunction;
 }
 
 const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
-	const { canvasRef, ...rest } = props;
+	const { canvasRef, canvasFunction, ...rest } = props;
 
 	const canvasRefInternal = canvasRef || useRef<HTMLCanvasElement>(null);
 
 	useEffect(() => {
 		// Set up canvas
 		const canvas = canvasRefInternal.current;
-		const context = canvas?.getContext("2d", { willReadFrequently: true });
-		let ascending = true;
-		let alpha = 0;
+		if (!canvas) return;
 
-		/*	TODO: Implement ambient background animation.
-				Specification:
-					- Dark background.
-					- Large animated blurred circles that move around in random directions (one or two on screen max.)
-					- Circles must use add color blending when overlapping.
-					- Circles must be heavily blurred so it feels out of focus (page content is the main focus.)
-					- Disabled on light theme.
-		*/
-		function animate() {
-			if (!context) return;
-			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+		const context = canvas.getContext("2d", { willReadFrequently: true });
+		if (!context) return;
 
-			if (alpha > 1) {
-				ascending = false;
-			}
-			if (alpha < 0) {
-				ascending = true;
-			}
+		let canvasFunInternal = canvasFunction;
 
-			if (ascending) alpha += 0.01;
-			else alpha -= 0.01;
+		if (!canvasFunInternal)
+			// Fallback to TurquisePulseBackground if not given
+			canvasFunInternal = CanvasBackgrounds.TurquisePulseBackground;
 
-			context.fillStyle = `rgba(0, 30, 30, ${alpha})`;
-			context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-		}
+		let stopAnimation = canvasFunInternal(context);
 
-		let interval = setInterval(animate, 300);
-		return () => clearInterval(interval);
+		return () => stopAnimation();
 	}, []);
 
 	const style: React.CSSProperties = {
