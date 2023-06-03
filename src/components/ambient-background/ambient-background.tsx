@@ -6,11 +6,13 @@ export interface AmbientBackgroundProps extends HTMLAttributes<HTMLCanvasElement
 
 const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
 
-    const canvasRef = props.canvasRef || useRef<HTMLCanvasElement>(null);
+    const { canvasRef, ...rest } = props;
+
+    const canvasRefInternal = canvasRef || useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
         // Set up canvas
-        const canvas = canvasRef.current;
+        const canvas = canvasRefInternal.current;
         const context = canvas?.getContext('2d');
         let ascending = true;
         let alpha = 0;
@@ -43,7 +45,7 @@ const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
         height: '100%'
     }
 
-    return <canvas {...props} style={style} ref={canvasRef} />
+    return <canvas {...rest} style={style} ref={canvasRef} />
 }
 
 export default AmbientBackground;
