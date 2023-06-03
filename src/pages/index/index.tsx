@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { Container, Heading, Stack, Text, Box, SlideFade, Link, Button, HStack, Divider } from '@chakra-ui/react';
+import { Container, Heading, Stack, Text, Box, SlideFade, Link, Button, HStack, Divider, useColorMode } from '@chakra-ui/react';
+import AmbientBackground from 'components/ambient-background/ambient-background';
 import PageWrapper from 'components/page-wrapper/page-wrapper';
 import usePageTitle from 'hooks/page-title';
 import React from 'react';
@@ -7,8 +8,10 @@ import React from 'react';
 const IndexPage: React.FC<{}> = (props) => {
     usePageTitle('About Me')
 
+    const { colorMode } = useColorMode();
+
     return (
-        <PageWrapper>
+        <PageWrapper backgroundElement={colorMode === 'dark' && <AmbientBackground />}>
             <Container maxW='container.xl' marginTop='3rem'>
                 <Stack spacing={12}>
                     <SlideFade in offsetY='30px' transition={{ enter: { duration: 1, ease: 'easeOut' } }}>

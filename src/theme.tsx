@@ -15,8 +15,8 @@ export const theme = extendTheme({
     components: {
         HeaderBar: {
             baseStyle: (props: StyleFunctionProps) =>({
-                bg: mode('content.lightAcrylic', 'content.darkAcrylic')(props),
-                transition: 'box-shadow 300ms linear'
+                bg: 'transparent',
+                transition: 'box-shadow 300ms linear, background 300ms linear'
             }),
             variants: {
                 hovering: (props: StyleFunctionProps) => ({
@@ -24,7 +24,8 @@ export const theme = extendTheme({
                         '0 2px 4px var(--chakra-colors-blackAlpha-200)',
                         '0 2px var(--chakra-colors-whiteAlpha-100)'
                     )(props),
-                    backdropFilter: 'blur(25px)'
+                    backdropFilter: 'blur(25px)',
+                    bg: mode('content.lightAcrylic', 'content.darkAcrylic')(props)
                 })
             }
         },

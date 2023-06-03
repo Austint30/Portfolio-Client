@@ -3,11 +3,15 @@ import HeaderBar, { HeaderBarProps } from 'components/header-bar/header-bar';
 import React, { useMemo } from 'react';
 
 export interface PanelProps extends BoxProps {
-    headerBar?: React.ReactElement<HeaderBarProps>
+    headerBar?: React.ReactElement<HeaderBarProps>,
+
+    // Element to place in the background of the panel with absolute positioning.
+    // Good for animated backgrounds.
+    backgroundElement?: React.ReactElement<any> | null | false
 }
 
-const Panel: React.FC<PanelProps> = (props) => {
-    const { children, headerBar, ...rest } = props;
+const Panel = React.forwardRef<HTMLDivElement, PanelProps>((props, ref) => {
+    const { children, headerBar, backgroundElement, ...rest } = props;
 
     const styles = useStyleConfig('Panel');
     const [ hoverHeader, setHoverHeader ] = React.useState(false);
@@ -21,8 +25,19 @@ const Panel: React.FC<PanelProps> = (props) => {
 
     if (mutatableHeaderBar){
         mutatableHeaderBar = React.cloneElement(mutatableHeaderBar, {
-            variant: hoverHeader ? 'hovering' : undefined
+            variant: hoverHeader ? 'hovering' : undefined,
+            zIndex: 1
         })
+    }
+
+    let _backgroundElement = null;
+
+    if(props.backgroundElement){
+        _backgroundElement = (
+            <Box position='absolute' left={0} top={0} width='100%' height='100%'>
+                {backgroundElement}
+            </Box>
+        )
     }
 
     return (
@@ -30,13 +45,23 @@ const Panel: React.FC<PanelProps> = (props) => {
             __css={styles}
             {...rest}
             width='100%'
-            overflow='auto'
-            onScroll={handleScroll}
+            height='100%'
+            position='relative'
+            ref={ref}
         >
-            {mutatableHeaderBar}
-            {children}
+            {_backgroundElement}
+            <Box
+                height='100%'
+                overflow='auto'
+                onScroll={handleScroll}
+            >
+                {mutatableHeaderBar}
+                {children}
+            </Box>
         </Box>
     )
-}
+})
+
+Panel.displayName = 'Panel'
 
 export default Panel

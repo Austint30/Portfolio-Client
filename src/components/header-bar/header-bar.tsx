@@ -1,11 +1,11 @@
 import { Box, BoxProps, useStyleConfig } from '@chakra-ui/react';
-import { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 
 export interface HeaderBarProps extends BoxProps {
     variant?: 'hovering'
 }
 
-const HeaderBar: React.FC<HeaderBarProps> = (props) => {
+const HeaderBar = React.forwardRef<HTMLDivElement, HeaderBarProps>((props, ref) => {
     const { children, variant, ...rest } = props;
 
     const styles = useStyleConfig('HeaderBar', { variant });
@@ -19,10 +19,13 @@ const HeaderBar: React.FC<HeaderBarProps> = (props) => {
             top={0}
             __css={styles}
             {...rest}
+            ref={ref}
         >
             {children}
         </Box>
     )
-}
+})
+
+HeaderBar.displayName = 'HeaderBar'
 
 export default HeaderBar
