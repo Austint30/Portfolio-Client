@@ -41,10 +41,16 @@ const PageWrapper: React.FC<PropsWithChildren<PageWrapperProps>> = (props) => {
             if (!panelRef.current) return;
 
             let avgColor = CanvasUtils.getRgbaAverage(imgData);
+
+            // Find the final color of the backgroundElement when its alpha color is mixed with the panel background
             let blendedColor = CssUtils.projectAlphaOnOpaque(avgColor, getComputedStyle(panelRef.current).background)
+
             blendedColor[3] = 0.7; // override alpha
             let blendedColorCss = CssUtils.stringifyRgb(blendedColor);
-            headerBarRef.current.style.background = blendedColorCss;
+            if (blendedColorCss !== headerBarRef.current.style.background){
+                // Only apply style if the rgb string is NOT the same
+                headerBarRef.current.style.background = blendedColorCss;
+            }
         }
 
         let interval = setInterval(onFrame, 60/0.1);
