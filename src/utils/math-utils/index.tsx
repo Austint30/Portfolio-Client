@@ -1,1 +1,1 @@
-export { numLerp } from './num-lerp'
+export { numLerp } from "./num-lerp";

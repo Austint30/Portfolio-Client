@@ -1,1 +1,1 @@
-export { getRgbAverage, getRgbaAverage } from './color-average';
+export { getRgbAverage, getRgbaAverage } from "./color-average";

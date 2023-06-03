@@ -1,6 +1,5 @@
-
 const appConfig = {
-    appName: "Austin's Portfolio"
-}
+	appName: "Austin's Portfolio",
+};
 
-export default appConfig
+export default appConfig;
