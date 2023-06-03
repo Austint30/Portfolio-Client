@@ -21,6 +21,7 @@ const PageWrapper: React.FC<PropsWithChildren<PageWrapperProps>> = (props) => {
     const headerBarRef = useRef<HTMLDivElement>(null);
 
     // Update the header bar color to match the backgroundElement canvas if available
+    // TODO: Find a way to make this more modular
     useEffect(() => {
         if (!headerBarRef.current) return;
         
