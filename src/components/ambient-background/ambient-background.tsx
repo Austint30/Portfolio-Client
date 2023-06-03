@@ -13,7 +13,7 @@ const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
     useEffect(() => {
         // Set up canvas
         const canvas = canvasRefInternal.current;
-        const context = canvas?.getContext('2d');
+        const context = canvas?.getContext('2d', { willReadFrequently: true });
         let ascending = true;
         let alpha = 0;
 
