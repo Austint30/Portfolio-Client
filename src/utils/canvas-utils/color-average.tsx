@@ -28,7 +28,7 @@ export function getRgbAverage(imageData: ImageData): [number, number, number] {
 
 /**
  * Gets the average RGBA color of an ImageData object.
- * Returns a vector with three elements representing RGBA values
+ * Returns a vector with four elements representing RGBA values
  */
 export function getRgbaAverage(imageData: ImageData): [number, number, number, number] {
     const componentCnt = imageData.data.length;
