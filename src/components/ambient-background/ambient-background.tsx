@@ -17,6 +17,14 @@ const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
 		let ascending = true;
 		let alpha = 0;
 
+		/*	TODO: Implement ambient background animation.
+				Specification:
+					- Dark background.
+					- Large animated blurred circles that move around in random directions (one or two on screen max.)
+					- Circles must use add color blending when overlapping.
+					- Circles must be heavily blurred so it feels out of focus (page content is the main focus.)
+					- Disabled on light theme.
+		*/
 		function animate() {
 			if (!context) return;
 			context.clearRect(0, 0, context.canvas.width, context.canvas.height);
