@@ -5,12 +5,16 @@ import React, { useMemo } from 'react';
 export interface PanelProps extends BoxProps {
     headerBar?: React.ReactElement<HeaderBarProps>,
 
-    // If enabled the bottom shadow of the headerbar disappears when scrolled to the top
-    // Looks good for highly presentational pages
+    /**
+     * If enabled the bottom shadow of the headerbar disappears when scrolled to the top
+     * Looks good for highly presentational pages
+     */
     useDynamicHeaderBar?: boolean,
 
-    // Element to place in the background of the panel with absolute positioning.
-    // Good for animated backgrounds.
+    /**
+     * Element to place in the background of the panel with absolute positioning.
+     * Good for animated backgrounds.
+     */
     backgroundElement?: React.ReactElement<any> | null | false
 }
 
