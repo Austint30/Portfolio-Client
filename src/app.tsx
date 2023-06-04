@@ -1,6 +1,8 @@
 import { ApolloProvider } from "@apollo/client";
 import { ApolloClient, InMemoryCache } from "@apollo/client/core";
 import { ChakraProvider } from "@chakra-ui/react";
+import {} from "apollo3-cache-persist";
+import { persistCache, LocalStorageWrapper } from "apollo3-cache-persist";
 import * as Pages from "pages";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { theme } from "theme";
@@ -17,8 +19,15 @@ const router = createBrowserRouter([
 	},
 ]);
 
+const cache = new InMemoryCache();
+
+await persistCache({
+	cache,
+	storage: new LocalStorageWrapper(window.localStorage),
+});
+
 const apolloClient = new ApolloClient({
-	cache: new InMemoryCache(),
+	cache,
 });
 
 const App: React.FC<{}> = () => {

@@ -56,7 +56,7 @@ export const theme = extendTheme({
 					color: mode("brand.light", "brand.dark")(props),
 				}),
 				secondary: (props: StyleFunctionProps) => ({
-					color: mode("gray.600", "gray.400")(props),
+					color: mode("blackAlpha.700", "whiteAlpha.700")(props),
 				}),
 			},
 		},

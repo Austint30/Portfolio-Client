@@ -1,4 +1,5 @@
 import { CanvasBackgrounds } from "canvas";
+import { ClearSideEffects } from "canvas/backgrounds/types";
 import React, { HTMLAttributes, useEffect, useRef } from "react";
 
 export interface AmbientBackgroundProps
@@ -13,9 +14,19 @@ const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
 	const { canvasRef, canvasFunction, ...rest } = props;
 
 	const canvasRefInternal = canvasRef || useRef<HTMLCanvasElement>(null);
+	const animationRef = useRef<{ stopAnimation: ClearSideEffects | null }>({
+		stopAnimation: null,
+	});
 
 	useEffect(() => {
 		// Set up canvas
+
+		// Clear interval from previous background animation
+		if (animationRef.current.stopAnimation !== null) {
+			animationRef.current.stopAnimation();
+			animationRef.current.stopAnimation = null;
+		}
+
 		const canvas = canvasRefInternal.current;
 		if (!canvas) return;
 
@@ -37,16 +48,16 @@ const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
 		let canvasFunInternal = canvasFunction;
 
 		if (!canvasFunInternal)
-			// Fallback to TurquisePulseBackground if not given
-			canvasFunInternal = CanvasBackgrounds.TurquisePulseBackground;
+			// Fallback to BlurryMovingCirclesBackground if not given
+			canvasFunInternal = CanvasBackgrounds.BlurryMovingCirclesBackground;
 
-		let stopAnimation = canvasFunInternal(context);
+		animationRef.current.stopAnimation = canvasFunInternal(context);
 
 		return () => {
-			stopAnimation();
+			animationRef.current.stopAnimation?.();
 			resizeObserver.disconnect();
 		};
-	}, []);
+	}, [canvasFunction?.toString()]);
 
 	const style: React.CSSProperties = {
 		...props.style,

@@ -4,4 +4,6 @@
  */
 export type CanvasBackgroundFunction = (
 	canvasContext: CanvasRenderingContext2D
-) => (...args: any[]) => void;
+) => ClearSideEffects;
+
+export type ClearSideEffects = (...args: any[]) => void;

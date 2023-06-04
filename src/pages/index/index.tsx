@@ -1,3 +1,4 @@
+import { useReactiveVar } from "@apollo/client";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import {
 	Container,
@@ -12,14 +13,21 @@ import {
 	Divider,
 	useColorMode,
 } from "@chakra-ui/react";
+import { UiState } from "apollo/local-state/state";
 import { CanvasBackgrounds } from "canvas";
 import AmbientBackground from "components/ambient-background/ambient-background";
 import PageWrapper from "components/page-wrapper/page-wrapper";
 import usePageTitle from "hooks/page-title";
 import React from "react";
+import BackgroundPicker from "./background-picker";
+
+const STATE = UiState.IndexPageState;
 
 const IndexPage: React.FC<{}> = (props) => {
 	usePageTitle("About Me");
+
+	const backgroundName = useReactiveVar(STATE.reactiveVars.indexBackground);
+	const backgroundFn = STATE.GetBackgroundFn(backgroundName);
 
 	const { colorMode } = useColorMode();
 
@@ -27,11 +35,7 @@ const IndexPage: React.FC<{}> = (props) => {
 		<PageWrapper
 			backgroundElement={
 				colorMode === "dark" && (
-					<AmbientBackground
-						canvasFunction={
-							CanvasBackgrounds.BlurryMovingCirclesBackground
-						}
-					/>
+					<AmbientBackground canvasFunction={backgroundFn} />
 				)
 			}
 			panelProps={{ useDynamicHeaderBar: true }}
@@ -96,6 +100,7 @@ const IndexPage: React.FC<{}> = (props) => {
 					</SlideFade>
 				</Stack>
 			</Container>
+			{colorMode === "dark" && <BackgroundPicker />}
 		</PageWrapper>
 	);
 };

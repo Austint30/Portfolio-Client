@@ -1,4 +1,4 @@
-import { Box, BoxProps, useStyleConfig } from "@chakra-ui/react";
+import { Box, BoxProps, Flex, useStyleConfig } from "@chakra-ui/react";
 import HeaderBar, { HeaderBarProps } from "components/header-bar/header-bar";
 import React, { useMemo } from "react";
 
@@ -74,10 +74,15 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>((props, ref) => {
 			ref={ref}
 		>
 			{_backgroundElement}
-			<Box height="100%" overflow="auto" onScroll={handleScroll}>
+			<Flex
+				direction="column"
+				height="100%"
+				overflow="auto"
+				onScroll={handleScroll}
+			>
 				{mutatableHeaderBar}
 				{children}
-			</Box>
+			</Flex>
 		</Box>
 	);
 });

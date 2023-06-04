@@ -1,17 +1,10 @@
 import { useReactiveVar } from "@apollo/client";
-import {
-	Box,
-	Flex,
-	useBreakpointValue,
-	useStyleConfig,
-} from "@chakra-ui/react";
+import { Box, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { UiState } from "apollo/local-state/state";
-import AppHeaderBar, {
-	AppHeaderBarProps,
-} from "components/app-header-bar/app-header-bar";
+import AppHeaderBar from "components/app-header-bar/app-header-bar";
 import AppSideBar from "components/app-side-bar";
 import Panel, { PanelProps } from "components/panel/panel";
-import React, { PropsWithChildren, useEffect, useRef, useState } from "react";
+import React, { PropsWithChildren, useEffect, useRef } from "react";
 import { CanvasUtils, CssUtils } from "utils";
 
 export interface PageWrapperProps {
@@ -21,7 +14,7 @@ export interface PageWrapperProps {
 
 const PageWrapper: React.FC<PropsWithChildren<PageWrapperProps>> = (props) => {
 	const sideNavCollapsed = useReactiveVar(
-		UiState.reactiveVars.sideNavCollapsed
+		UiState.NavState.reactiveVars.sideNavCollapsed
 	);
 
 	const panelRef = useRef<HTMLDivElement>(null);
@@ -107,7 +100,9 @@ const PageWrapper: React.FC<PropsWithChildren<PageWrapperProps>> = (props) => {
 				borderLeftRadius={{ md: "1.5rem", base: 0 }}
 				headerBar={
 					<AppHeaderBar
-						onMenuClicked={() => UiState.ToggleSideNavCollapsed()}
+						onMenuClicked={() =>
+							UiState.NavState.ToggleSideNavCollapsed()
+						}
 						ref={headerBarRef}
 					/>
 				}
