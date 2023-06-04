@@ -2,10 +2,15 @@
  * Parses an CSS rgb or rgba string to an array. Returns 100% alpha if invalid.
  * @param rgbString e.g. rgb(1,2,3) or rgba(1,2,3,1)
  */
-export function parseRgb(rgbString: string): number[] {
+export function parseRgb(rgbString: string | number[]): number[] {
 	if (!rgbString || rgbString.length < 4) {
 		return [0, 0, 0, 0];
 	}
+
+	if (Array.isArray(rgbString)) {
+		return rgbString;
+	}
+
 	let rgbValues: number[] = [];
 
 	let isInNumber = false;

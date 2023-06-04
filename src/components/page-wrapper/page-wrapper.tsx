@@ -42,11 +42,18 @@ const PageWrapper: React.FC<PropsWithChildren<PageWrapperProps>> = (props) => {
 				headerBarRef.current.style.removeProperty("background");
 				return;
 			}
+
+			if (!headerBarRef.current.classList.contains("hovering")) {
+				// Header Bar is sticking at the top of the page. Don't give it any style so it remains fully transparent.
+				headerBarRef.current.style.removeProperty("background");
+				return;
+			}
+
 			let imgData = context?.getImageData(
 				0,
 				0,
 				context.canvas.width,
-				context.canvas.height
+				headerBarRef.current.offsetHeight
 			);
 			if (!imgData) return;
 

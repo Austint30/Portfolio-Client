@@ -7,6 +7,8 @@ export interface AmbientBackgroundProps
 	canvasFunction?: CanvasBackgrounds.CanvasBackgroundFunction;
 }
 
+// TODO: Use canvas.toDataURL() to use this as a background style instead
+
 const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
 	const { canvasRef, canvasFunction, ...rest } = props;
 
@@ -17,8 +19,20 @@ const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
 		const canvas = canvasRefInternal.current;
 		if (!canvas) return;
 
-		const context = canvas.getContext("2d", { willReadFrequently: true });
+		const context = canvas.getContext("2d");
 		if (!context) return;
+
+		const updateCanvasSize = () => {
+			let width = canvas.offsetWidth;
+			let height = canvas.offsetHeight;
+			canvas.width = width;
+			canvas.height = height;
+		};
+
+		const resizeObserver = new ResizeObserver(updateCanvasSize);
+		resizeObserver.observe(canvas);
+
+		updateCanvasSize();
 
 		let canvasFunInternal = canvasFunction;
 
@@ -28,7 +42,10 @@ const AmbientBackground: React.FC<AmbientBackgroundProps> = (props) => {
 
 		let stopAnimation = canvasFunInternal(context);
 
-		return () => stopAnimation();
+		return () => {
+			stopAnimation();
+			resizeObserver.disconnect();
+		};
 	}, []);
 
 	const style: React.CSSProperties = {
