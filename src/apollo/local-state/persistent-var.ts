@@ -23,10 +23,19 @@ export function makePVar<T>(value: T, vName: string): ReactiveVar<T> {
   }
 
   const _var = makeVar(value);
+  
+  // Respond to localstorage changes when a different tab changes the persisted state
+  window.addEventListener('storage', () => {
+    let newValue = get();
+    let lastValue = _var();
+    if (newValue !== lastValue){
+      _var(newValue);
+    }
+  })
 
   function getStorage(){
     try {
-      let obj = JSON.parse(localStorage.getItem(KEY) || '{}');
+      let obj = JSON.parse(window.localStorage.getItem(KEY) || '{}');
       if (typeof obj !== 'object' || obj === null || obj === undefined){
         obj = {};
       }
@@ -44,7 +53,7 @@ export function makePVar<T>(value: T, vName: string): ReactiveVar<T> {
       ...storage,
       ...newStorage
     }
-    localStorage.setItem(KEY, JSON.stringify(mergedStorage));
+    window.localStorage.setItem(KEY, JSON.stringify(mergedStorage));
   }
 
   function get(): T{
