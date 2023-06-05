@@ -21,11 +21,6 @@ const router = createBrowserRouter([
 
 const cache = new InMemoryCache();
 
-await persistCache({
-	cache,
-	storage: new LocalStorageWrapper(window.localStorage),
-});
-
 const apolloClient = new ApolloClient({
 	cache,
 });
