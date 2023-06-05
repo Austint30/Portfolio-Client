@@ -17,9 +17,9 @@ export function BlurryMovingCirclesBackground(ctx: CanvasRenderingContext2D) {
 	const MAX_CIRCLE_DELAY_TIME = 10; // seconds
 
 	class BlurryCircle {
+		public x: number = 0;
+		public y: number = 0;
 		private color: number[] = [0, 0, 0, 0];
-		private x: number = 0;
-		private y: number = 0;
 		private radius: number = 100;
 		private lifetime: number = 5;
 
@@ -131,10 +131,33 @@ export function BlurryMovingCirclesBackground(ctx: CanvasRenderingContext2D) {
 		vHeight: number,
 		startDelay: number = MAX_CIRCLE_DELAY_TIME
 	) {
+		let randX = Math.random() * vWidth;
+		let randY = Math.random() * vHeight;
+
+		let randXFlipped = vWidth - randX;
+		let randYFlipped = vHeight - randY;
+
+		// If the chosen position is too close to the circle in the stack, flip it to the opposite side
+		circleStack.forEach((c) => {
+			// Euclidean distance
+			let distOrig = Math.sqrt(
+				(c.x - randX) * (c.x - randX) + (c.y - randY) * (c.y - randY)
+			);
+			let distFlipped = Math.sqrt(
+				(c.x - randXFlipped) * (c.x - randXFlipped) +
+					(c.y - randYFlipped) * (c.y - randYFlipped)
+			);
+
+			if (distOrig < distFlipped) {
+				randX = randXFlipped;
+				randY = randYFlipped;
+			}
+		});
+
 		const circle = new BlurryCircle(
 			"rgba(40, 255, 100, 0.1)",
-			Math.random() * vWidth,
-			Math.random() * vHeight,
+			randX,
+			randY,
 			800,
 			Math.max(MIN_CIRCLE_LIFETIME, Math.random()) * MAX_CIRCLE_LIFETIME,
 			Math.random() * startDelay
