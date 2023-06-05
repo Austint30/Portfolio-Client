@@ -1,6 +1,7 @@
 import { makeVar } from "@apollo/client";
 import { CanvasBackgrounds } from "canvas";
 import { CanvasBackgroundFunction } from "canvas/backgrounds";
+import { makePVar } from "../persistent-var";
 
 // Immutable list of named backgrounds
 const BACKGROUND_LIST: { [name: string]: CanvasBackgroundFunction } = {
@@ -11,7 +12,7 @@ const BACKGROUND_LIST: { [name: string]: CanvasBackgroundFunction } = {
 const DEFAULT_BACKGROUND = "Ambience"
 
 export const reactiveVars = {
-  indexBackground: makeVar(DEFAULT_BACKGROUND)
+  indexBackground: makePVar(DEFAULT_BACKGROUND, "ui.indexpage.indexBackground")
 }
 
 export function SetIndexBackground(name: string){
