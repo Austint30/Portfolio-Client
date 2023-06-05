@@ -58,19 +58,18 @@ export function BlurryMovingCirclesBackground(ctx: CanvasRenderingContext2D) {
 
 		public render() {
 			ctx.save();
-			ctx.filter = "blur(300px)";
 			ctx.globalCompositeOperation = "screen";
 			ctx.beginPath();
 
 			const state = this.computeCurrState();
 
-			ctx.arc(
+			const rdg = ctx.createRadialGradient(
 				this.x,
 				this.y,
-				this.radius * state.radiusMult,
 				0,
-				2 * Math.PI,
-				false
+				this.x,
+				this.y,
+				this.radius
 			);
 
 			const colorCpy = [...this.color];
@@ -78,8 +77,20 @@ export function BlurryMovingCirclesBackground(ctx: CanvasRenderingContext2D) {
 
 			if (colorCpy.length === 3) colorCpy.push(alphaValue);
 			else colorCpy[3] = alphaValue;
-			ctx.fillStyle = CssUtils.stringifyRgb(colorCpy);
-			ctx.fill();
+
+			let stop0 = colorCpy;
+			let stop1 = [this.color[0], this.color[1], this.color[2], 0];
+
+			rdg.addColorStop(0, CssUtils.stringifyRgb(stop0));
+			rdg.addColorStop(1, CssUtils.stringifyRgb(stop1));
+
+			ctx.fillStyle = rdg;
+			ctx.fillRect(
+				this.x - this.radius,
+				this.y - this.radius,
+				this.radius * 2,
+				this.radius * 2
+			);
 
 			ctx.restore();
 		}
@@ -124,7 +135,7 @@ export function BlurryMovingCirclesBackground(ctx: CanvasRenderingContext2D) {
 			"rgba(40, 255, 100, 0.1)",
 			Math.random() * vWidth,
 			Math.random() * vHeight,
-			600,
+			800,
 			Math.max(MIN_CIRCLE_LIFETIME, Math.random()) * MAX_CIRCLE_LIFETIME,
 			Math.random() * startDelay
 		);
