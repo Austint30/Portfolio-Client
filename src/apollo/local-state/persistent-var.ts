@@ -9,17 +9,25 @@ const KEY = 'persistent-state';
  * @returns {ReactiveVar<T>}
  */
 export function makePVar<T>(value: T, vName: string): ReactiveVar<T> {
-  let _var = makeVar(value);
-  let loaded = false;
 
-  let initStorage = getStorage();
-  initStorage[vName] = value;
+  // Initialize storage
+  let storageValue = get();
+  if (storageValue === undefined){
+    storageValue = value
+    set(storageValue);
+  }
 
+  // If value in storage is not the same as value
+  if (storageValue !== value){
+    value = storageValue;
+  }
+
+  const _var = makeVar(value);
 
   function getStorage(){
     try {
       let obj = JSON.parse(localStorage.getItem(KEY) || '{}');
-      if (typeof obj !== 'object'){
+      if (typeof obj !== 'object' || obj === null || obj === undefined){
         obj = {};
       }
       return obj;
@@ -51,24 +59,13 @@ export function makePVar<T>(value: T, vName: string): ReactiveVar<T> {
   const rv: ReactiveVar<T> = function(newValue){
     
 
-    newValue = _var(newValue);
     if (arguments.length > 0){
-      // Set value
-      set(newValue);
-      value = newValue!;
+      newValue = _var(newValue!);
+      set(newValue!);
+      return newValue;
     }
-    else if (!loaded)
-    {
-      let storageValue = get();
-      if (storageValue === undefined){
-        storageValue = value
-        set(storageValue);
-      }
-      value = storageValue;
-      _var(value);
-      loaded = true;
-    }
-    return value;
+
+    return _var();
   }
 
   rv.onNextChange = _var.onNextChange
