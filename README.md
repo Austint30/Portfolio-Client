@@ -1,7 +1,7 @@
 # My WIP Portfolio Website
 
 Here I am developing a portfolio to showcase the skills that I have accrued over the years being a full stack developer.
-This website is still heavily a work-in-progress, but feel free to take a look inside the source code!
+This website is still heavily a work-in-progress and is in its early stages. But, feel free to take a look inside the source code!
 
 ## Plans for Frontend
 - Improve compatibility with mobile device screens.
@@ -21,12 +21,13 @@ This website is still heavily a work-in-progress, but feel free to take a look i
 ## Plans for Backend
 The backend does not exist at this time. Here are my plans for developing one:
 - Create a separate repository containing all of the code for the backend layer.
-- Utilize AWS CloudFormation Infrastructure-as-Code to deploy an ASP.NET Core REST API hosted by AWS Fargate. MVC will be utilized here.
+- Utilize AWS CloudFormation Infrastructure-as-Code to deploy an ASP.NET Core REST API hosted by AWS Fargate.
+  - Utilize MVC.
+  - Implement business and database access layer. DBA layer should be mockable for unit testing.
 - Create a GraphQL server hosted using AWS Fargate to integrate with the REST API.
 - Host a MySQL server on RDS to add persistence to the website.
 - Utilize AWS Cognito to support logging in using federated identities (Google, Microsoft, etc).
 - Build the internals of the two-way conversation system that recruiters can use to contact me. Should utilize reply-by-email as well. Conversation chains will be stored in MySQL.
-- Implement business and database access layer. DBA layer should be mockable for unit testing.
 - Implement unit testing for business layer code.
 
 ## Plans for Frontend and Backend
